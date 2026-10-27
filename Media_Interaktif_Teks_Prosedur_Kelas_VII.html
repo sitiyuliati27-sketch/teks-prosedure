@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROSEDUR LAB — Media Pembelajaran Interaktif</title>
+<style>
+:root{--bg:#070b18;--panel:#101a31;--panel2:#14213d;--cyan:#4de8ff;--purple:#a88bff;--pink:#ff68c5;--text:#edf4ff;--muted:#a9b8d4;--green:#63f5bb;--line:rgba(116,190,255,.22)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#18285a 0,transparent 38%),radial-gradient(ellipse at 90% 20%,#321a54 0,transparent 30%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.6}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:linear-gradient(rgba(100,180,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(100,180,255,.16) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+.wrap{max-width:1160px;margin:auto;padding:24px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 0 28px}.brand{font-weight:900;letter-spacing:2px;color:var(--cyan)}.tag{border:1px solid var(--line);padding:7px 12px;border-radius:99px;color:var(--muted);font-size:.82rem}
+.hero{position:relative;overflow:hidden;border:1px solid rgba(77,232,255,.3);border-radius:28px;padding:clamp(26px,6vw,64px);background:linear-gradient(120deg,rgba(17,32,63,.96),rgba(29,19,60,.88));box-shadow:0 20px 80px #0005}
+.hero:after{content:"";position:absolute;width:270px;height:270px;right:-60px;top:-75px;border-radius:50%;border:1px solid #4de8ff55;box-shadow:0 0 0 28px #4de8ff0d,0 0 0 58px #a88bff0b}
+.kicker{color:var(--cyan);font-size:.8rem;font-weight:800;letter-spacing:3px;text-transform:uppercase}.hero h1{font-size:clamp(2.3rem,7vw,5rem);line-height:1.02;letter-spacing:-2px;margin:15px 0}.gradient{background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:700px;color:#c5d3ed;font-size:1.05rem}.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.pill{padding:9px 13px;border-radius:12px;background:#ffffff0a;border:1px solid var(--line);font-size:.9rem}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 30px}nav a{color:var(--muted);text-decoration:none;padding:9px 14px;border:1px solid var(--line);border-radius:12px;font-size:.9rem}nav a:hover{color:var(--cyan);border-color:var(--cyan)}
+section{scroll-margin-top:20px;margin:28px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}.section-head h2{font-size:clamp(1.45rem,4vw,2.1rem);margin:0}.eyebrow{font-size:.75rem;letter-spacing:2px;color:var(--purple);font-weight:800;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{grid-column:span 6;background:linear-gradient(145deg,rgba(19,32,59,.95),rgba(12,20,39,.95));border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 12px 35px #0002}.card.full{grid-column:1/-1}.card.third{grid-column:span 4}.card h3{margin:0 0 8px}.muted{color:var(--muted)}.icon{font-size:1.5rem;margin-bottom:8px}.accent{color:var(--cyan)}.structure{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.structure div{padding:15px;border-radius:14px;border:1px solid var(--line);background:#0a1226}.structure b{display:block;color:var(--cyan);margin-bottom:5px}
+.example{border-left:3px solid var(--pink);padding:8px 0 8px 16px;color:#dce7fb}.btn{border:0;border-radius:12px;padding:12px 17px;background:linear-gradient(100deg,var(--cyan),#9b9aff);color:#081022;font-weight:900;cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}.btn.secondary{background:#ffffff0a;border:1px solid var(--line);color:var(--text)}.btn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+.video{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;border:1px solid var(--line);background:#030713}.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.steps{display:grid;gap:10px;margin:16px 0}.step{display:flex;align-items:center;gap:12px;padding:14px;background:#0a1429;border:1px solid var(--line);border-radius:13px;cursor:grab;user-select:none}.step:active{cursor:grabbing}.step .num{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#4de8ff18;color:var(--cyan);font-weight:900;flex-shrink:0}.step.dragging{opacity:.4;border-color:var(--pink)}.step.correct{border-color:var(--green)}.step.wrong{border-color:var(--pink)}.feedback{margin-top:12px;padding:12px 14px;border-radius:12px;background:#ffffff08;color:var(--muted);min-height:45px}
+.question{padding:17px 0;border-bottom:1px solid var(--line)}.question:last-child{border:0}.question p{font-weight:700;margin:0 0 10px}.options{display:grid;gap:8px}.option{display:flex;gap:10px;align-items:start;border:1px solid var(--line);border-radius:11px;padding:10px 12px;cursor:pointer;color:#d8e4fa}.option:has(input:checked){border-color:var(--cyan);background:#4de8ff0d}.option input{margin-top:5px;accent-color:var(--cyan)}
+textarea,input[type=text]{width:100%;background:#080f21;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:12px;font:inherit}textarea{min-height:105px;resize:vertical}.result{font-size:1.05rem;font-weight:800;margin:12px 0}.progress{height:7px;background:#ffffff12;border-radius:9px;overflow:hidden;margin-top:12px}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--pink));transition:width .3s}
+footer{border-top:1px solid var(--line);padding:24px 0 8px;margin-top:42px;color:var(--muted);font-size:.88rem;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:760px){.wrap{padding:16px}.card,.card.third{grid-column:1/-1}.structure{grid-template-columns:repeat(2,1fr)}.hero:after{opacity:.45}.section-head{align-items:start;flex-direction:column}}
+@media print{body{background:white;color:#111}.hero,.card{background:white;color:#111;border:1px solid #aaa;box-shadow:none}.muted,.hero p,footer{color:#333}nav,.btn{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar"><div class="brand">◈ PROSEDUR<span style="color:var(--pink)">LAB</span></div><div class="tag">MEDIA PEMBELAJARAN INTERAKTIF · FASE D</div></header>
+<main>
+<div class="hero">
+  <div class="kicker">Bahasa Indonesia · Kelas VII</div>
+  <h1>Rancang langkah.<br><span class="gradient">Pahami prosedur.</span></h1>
+  <p>Jelajahi teks prosedur, pelajari strukturnya, susun langkah secara logis, lalu uji pemahamanmu melalui kuis interaktif.</p>
+  <div class="meta"><div class="pill">🎯 Struktur & unsur kebahasaan</div><div class="pill">⏱️ 15–20 menit</div><div class="pill">🧠 Memahami · Mengaplikasi · Merefleksi</div></div>
+</div>
+<nav aria-label="Navigasi materi"><a href="#tujuan">Tujuan</a><a href="#materi">Materi</a><a href="#video">Video</a><a href="#tantangan">Tantangan</a><a href="#kuis">Kuis</a><a href="#refleksi">Refleksi</a></nav>
+
+<section id="tujuan">
+<div class="section-head"><div><div class="eyebrow">01 / Misi belajar</div><h2>Target pembelajaran</h2></div><span class="tag">Kriteria tuntas kuis: 75%</span></div>
+<div class="grid">
+ <article class="card third"><div class="icon">◎</div><h3>Kenali struktur</h3><p class="muted">Mengidentifikasi tujuan, bahan/alat, dan langkah-langkah teks prosedur dengan benar.</p></article>
+ <article class="card third"><div class="icon">⇅</div><h3>Susun secara logis</h3><p class="muted">Mengurutkan langkah dengan tepat dan menjelaskan alasan urutannya secara santun.</p></article>
+ <article class="card third"><div class="icon">✦</div><h3>Uji pemahaman</h3><p class="muted">Menjawab kuis digital dan merefleksikan hal yang sudah dipahami.</p></article>
+</div>
+</section>
+
+<section id="materi">
+<div class="section-head"><div><div class="eyebrow">02 / Knowledge base</div><h2>Kenali teks prosedur</h2></div></div>
+<div class="grid">
+ <article class="card full"><h3>💡 Apa itu teks prosedur?</h3><p>Teks prosedur adalah teks yang berisi tujuan dan urutan langkah untuk melakukan atau membuat sesuatu. Langkah-langkah disusun secara runtut agar pembaca dapat mengikuti proses dengan benar.</p><div class="structure"><div><b>01 · Tujuan</b><span class="muted">Apa yang akan dibuat atau dilakukan.</span></div><div><b>02 · Alat/Bahan</b><span class="muted">Perlengkapan yang diperlukan, jika ada.</span></div><div><b>03 · Langkah</b><span class="muted">Tahapan berurutan dan jelas.</span></div><div><b>04 · Penutup</b><span class="muted">Simpulan, hasil, atau saran akhir.</span></div></div></article>
+ <article class="card"><h3>🔎 Ciri kebahasaan</h3><ul><li><b>Kata kerja perintah:</b> siapkan, masukkan, aduk.</li><li><b>Penanda urutan:</b> pertama, kemudian, selanjutnya, terakhir.</li><li><b>Kalimat jelas dan runtut</b> agar mudah diikuti.</li><li><b>Keterangan cara/waktu:</b> perlahan, selama dua menit.</li></ul></article>
+ <article class="card"><h3>🍜 Contoh: membuat mi instan</h3><div class="example"><b>Tujuan:</b> Membuat mi instan dengan aman dan benar.<br><b>Alat/bahan:</b> Mi, air, panci, kompor, mangkuk, dan alat makan.<br><b>Langkah:</b> Rebus air, masukkan mi, tunggu hingga matang sambil mengikuti petunjuk kemasan, siapkan bumbu, lalu campurkan mi dan bumbu.<br><b>Penutup:</b> Mi siap disajikan dengan hati-hati.</div><p class="muted">Perhatikan petunjuk pada kemasan dan berhati-hatilah saat menggunakan air panas.</p></article>
+ <article class="card full"><h3>🧩 Pertanyaan pemantik</h3><p class="muted">Mengapa urutan langkah tidak boleh tertukar?</p><p>Karena urutan yang tidak tepat dapat membuat hasil gagal, proses menjadi tidak aman, atau tujuan tidak tercapai. Urutan harus masuk akal dari awal sampai akhir.</p></article>
+</div>
+</section>
+
+<section id="video">
+<div class="section-head"><div><div class="eyebrow">03 / Watch & learn</div><h2>Video pembelajaran</h2></div><span class="tag">Pengertian · Tujuan · Ciri · Jenis</span></div>
+<div class="grid">
+ <article class="card" style="grid-column:span 8"><div class="video"><iframe src="https://www.youtube-nocookie.com/embed/RMuE2FX-q10" title="Video pembelajaran teks prosedur kelas 7 SMP/MTs" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><p class="muted">Video: “Video Pembelajaran Bahasa Indonesia Materi Teks Prosedur kelas 7 SMP/MTs” — kanal Nursyafa Room.</p><a class="btn secondary" href="https://www.youtube.com/watch?v=RMuE2FX-q10" target="_blank" rel="noopener">Buka di YouTube ↗</a></article>
+ <article class="card" style="grid-column:span 4"><h3>🎧 Misi saat menonton</h3><p class="muted">Catat atau ingat tiga hal ini:</p><ol><li>Apa tujuan teks prosedur?</li><li>Bagaimana mengenali langkah-langkahnya?</li><li>Mengapa langkah harus berurutan?</li></ol><p class="muted">Jika video tidak tampil, gunakan tombol “Buka di YouTube”. Koneksi internet diperlukan.</p></article>
+</div>
+</section>
+
+<section id="tantangan">
+<div class="section-head"><div><div class="eyebrow">04 / Interactive challenge</div><h2>Susun langkah dengan benar</h2></div><span class="tag">Seret kartu atau gunakan tombol ↑ ↓</span></div>
+<div class="card full"><p class="muted">Urutkan langkah membuat mi instan. Seret kartu ke posisi yang benar, atau gunakan tombol panah pada setiap kartu.</p>
+<div id="steps" class="steps" aria-label="Langkah-langkah yang dapat diurutkan">
+ <div class="step" draggable="true" data-id="3"><span class="num">↕</span><span class="steptext">Masukkan mi ke dalam air mendidih dan masak sesuai petunjuk kemasan.</span><button class="btn secondary moveup" aria-label="Pindah ke atas">↑</button><button class="btn secondary movedown" aria-label="Pindah ke bawah">↓</button></div>
+ <div class="step" draggable="true" data-id="1"><span class="num">↕</span><span class="steptext">Baca petunjuk pada kemasan dan siapkan alat serta bahan.</span><button class="btn secondary moveup" aria-label="Pindah ke atas">↑</button><button class="btn secondary movedown" aria-label="Pindah ke bawah">↓</button></div>
+ <div class="step" draggable="true" data-id="4"><span class="num">↕</span><span class="steptext">Siapkan bumbu di mangkuk sesuai petunjuk kemasan.</span><button class="btn secondary moveup" aria-label="Pindah ke atas">↑</button><button class="btn secondary movedown" aria-label="Pindah ke bawah">↓</button></div>
+ <div class="step" draggable="true" data-id="2"><span class="num">↕</span><span class="steptext">Didihkan air secukupnya di dalam panci dengan hati-hati.</span><button class="btn secondary moveup" aria-label="Pindah ke atas">↑</button><button class="btn secondary movedown" aria-label="Pindah ke bawah">↓</button></div>
+ <div class="step" draggable="true" data-id="5"><span class="num">↕</span><span class="steptext">Campurkan mi matang dengan bumbu, lalu sajikan dengan hati-hati.</span><button class="btn secondary moveup" aria-label="Pindah ke atas">↑</button><button class="btn secondary movedown" aria-label="Pindah ke bawah">↓</button></div>
+</div>
+<button class="btn" id="checkOrder">Periksa urutan</button> <button class="btn secondary" id="resetOrder">Acak ulang</button>
+<div class="feedback" id="orderFeedback" aria-live="polite">Petunjuk: baca setiap langkah dan pikirkan apa yang harus dilakukan lebih dahulu.</div>
+</div>
+</section>
+
+<section id="kuis">
+<div class="section-head"><div><div class="eyebrow">05 / Quick assessment</div><h2>Kuis pemahaman</h2></div><span class="tag">5 soal · Skor langsung</span></div>
+<form class="card full" id="quizForm">
+<div class="question"><p>1. Apa fungsi utama teks prosedur?</p><div class="options"><label class="option"><input type="radio" name="q1" value="a"> Menceritakan pengalaman masa lalu</label><label class="option"><input type="radio" name="q1" value="b"> Menjelaskan langkah untuk melakukan atau membuat sesuatu</label><label class="option"><input type="radio" name="q1" value="c"> Menggambarkan tokoh khayalan</label></div></div>
+<div class="question"><p>2. Bagian yang menjelaskan apa yang ingin dicapai disebut …</p><div class="options"><label class="option"><input type="radio" name="q2" value="a"> Tujuan</label><label class="option"><input type="radio" name="q2" value="b"> Penutup</label><label class="option"><input type="radio" name="q2" value="c"> Salam pembuka</label></div></div>
+<div class="question"><p>3. Manakah penanda urutan yang tepat?</p><div class="options"><label class="option"><input type="radio" name="q3" value="a"> Tetapi, meskipun, sedangkan</label><label class="option"><input type="radio" name="q3" value="b"> Cantik, luas, tinggi</label><label class="option"><input type="radio" name="q3" value="c"> Pertama, kemudian, terakhir</label></div></div>
+<div class="question"><p>4. Mengapa langkah-langkah perlu disusun secara logis?</p><div class="options"><label class="option"><input type="radio" name="q4" value="a"> Agar teks menjadi lebih panjang</label><label class="option"><input type="radio" name="q4" value="b"> Agar proses dapat diikuti dan tujuan tercapai</label><label class="option"><input type="radio" name="q4" value="c"> Agar tidak perlu membaca petunjuk</label></div></div>
+<div class="question"><p>5. Kata “masukkan” dalam teks prosedur merupakan contoh …</p><div class="options"><label class="option"><input type="radio" name="q5" value="a"> Kata kerja perintah</label><label class="option"><input type="radio" name="q5" value="b"> Kata sifat</label><label class="option"><input type="radio" name="q5" value="c"> Kata tanya</label></div></div>
+<button type="submit" class="btn">Kirim jawaban & lihat skor</button>
+<div id="quizResult" class="result" aria-live="polite"></div><div class="progress"><span id="progressBar"></span></div><p id="quizNote" class="muted"></p>
+</form>
+</section>
+
+<section id="refleksi">
+<div class="section-head"><div><div class="eyebrow">06 / Reflect</div><h2>Refleksi belajar</h2></div></div>
+<div class="grid"><div class="card"><h3>💭 Pikirkan kembali</h3><p class="muted">Tuliskan satu hal yang sudah kamu pahami dan satu hal yang masih ingin kamu pelajari.</p><label for="reflection">Refleksi saya</label><textarea id="reflection" placeholder="Hari ini saya memahami bahwa ...&#10;Saya masih ingin belajar tentang ..."></textarea><button class="btn" id="saveReflection" style="margin-top:12px">Simpan / cetak refleksi</button><p id="reflectionFeedback" class="muted" aria-live="polite"></p></div>
+<div class="card"><h3>🚀 Tantangan lanjutan</h3><p>Buat teks prosedur sederhana dari aktivitas sehari-hari.</p><ol><li>Tentukan tujuan.</li><li>Catat alat dan bahan jika diperlukan.</li><li>Tulis langkah secara runtut.</li><li>Gunakan kata perintah dan penanda urutan.</li><li>Periksa kembali apakah orang lain dapat mengikutinya.</li></ol></div></div>
+</section>
+</main>
+<footer><span>PROSEDURLAB · Bahasa Indonesia Kelas VII</span><span>Disusun berdasarkan draf rencana microteaching yang diberikan.</span></footer>
+</div>
+<script>
+const steps=document.getElementById('steps');let dragItem=null;
+function refreshNums(){[...steps.querySelectorAll('.step')].forEach((el,i)=>el.querySelector('.num').textContent=String(i+1).padStart(2,'0'))}
+steps.addEventListener('dragstart',e=>{const el=e.target.closest('.step');if(!el)return;dragItem=el;el.classList.add('dragging');e.dataTransfer.effectAllowed='move'});
+steps.addEventListener('dragend',()=>{if(dragItem)dragItem.classList.remove('dragging');dragItem=null;refreshNums()});
+steps.addEventListener('dragover',e=>{e.preventDefault();const target=e.target.closest('.step');if(!target||!dragItem||target===dragItem)return;const r=target.getBoundingClientRect();const after=e.clientY>r.top+r.height/2;steps.insertBefore(dragItem,after?target.nextSibling:target)});
+steps.addEventListener('click',e=>{const el=e.target.closest('.step');if(!el)return;if(e.target.closest('.moveup')&&el.previousElementSibling)steps.insertBefore(el,el.previousElementSibling);if(e.target.closest('.movedown')&&el.nextElementSibling)steps.insertBefore(el.nextElementSibling,el);refreshNums()});
+document.getElementById('checkOrder').addEventListener('click',()=>{const ids=[...steps.querySelectorAll('.step')].map(x=>+x.dataset.id);const good=ids.filter((x,i)=>x===i+1).length;steps.querySelectorAll('.step').forEach((el,i)=>{el.classList.toggle('correct',+el.dataset.id===i+1);el.classList.toggle('wrong',+el.dataset.id!==i+1)});document.getElementById('orderFeedback').textContent=good===5?'Hebat! Semua langkah sudah berurutan dengan logis. Ingat, selalu ikuti petunjuk kemasan dan utamakan keselamatan.':`Kamu menempatkan ${good} dari 5 langkah pada posisi yang tepat. Coba lagi: membaca petunjuk dan menyiapkan alat dilakukan sebelum mulai memasak.`});
+document.getElementById('resetOrder').addEventListener('click',()=>{const els=[...steps.querySelectorAll('.step')];for(let i=els.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[els[i],els[j]]=[els[j],els[i]]}els.forEach(el=>{el.classList.remove('correct','wrong');steps.appendChild(el)});refreshNums();document.getElementById('orderFeedback').textContent='Urutan diacak kembali. Silakan susun langkahnya.'});
+const answers={q1:'b',q2:'a',q3:'c',q4:'b',q5:'a'};
+document.getElementById('quizForm').addEventListener('submit',e=>{e.preventDefault();let score=0,answered=0;for(const [q,a] of Object.entries(answers)){const chosen=document.querySelector(`input[name="${q}"]:checked`);if(chosen){answered++;if(chosen.value===a)score++}}const pct=Math.round(score/5*100);const res=document.getElementById('quizResult');res.textContent=`Skor kamu: ${pct}/100 (${score} dari 5 jawaban benar).`;res.style.color=pct>=75?'var(--green)':'var(--pink)';document.getElementById('progressBar').style.width=pct+'%';document.getElementById('quizNote').textContent=answered<5?`Kamu baru menjawab ${answered} dari 5 soal. Lengkapi jawaban untuk hasil yang lebih akurat.`:pct>=75?'Tuntas! Target minimal 75% tercapai.': 'Belum mencapai 75%. Pelajari kembali materi dan coba lagi.'});
+document.getElementById('saveReflection').addEventListener('click',()=>{const val=document.getElementById('reflection').value.trim();const fb=document.getElementById('reflectionFeedback');if(!val){fb.textContent='Tuliskan refleksi terlebih dahulu.';return}fb.textContent='Refleksi siap dicetak. Pada dialog cetak, pilih “Save as PDF” jika ingin menyimpan sebagai PDF.';window.print()});
+refreshNums();
+</script>
+</body>
+</html>
